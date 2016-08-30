@@ -13,6 +13,7 @@ using namespace std;
 ///////////// Class CNode ////////////////////////////////////////////////
 
 class CNode {
+public:
     typ_t		typ;            // 0: composite, 1,2,...: atom types
     typ_t		sub;            // subtype
     union {
@@ -135,7 +136,7 @@ short CNode::depth() {
 		return 1;
 	short dep = 2;
 	CNode * e = head();
-	while ( e=e->next() )
+	while ( (e=e->next()) != NULL )
 		dep = max(dep, (short)(1+e->depth()));
 	return dep;
 }
@@ -256,7 +257,7 @@ CSequ * CSequ::join(CSequ * s){		// Join by attaching tails (not heads)
 CSequ * CSequ::dup(int lv){
 	CNode * s = head();				// Points to current head
 	CSequ * npt = new CSequ (s) ;	// Points to new sequence initialized
-	while( s = s->next() )
+	while( (s = s->next()) != NULL )
 		npt->append( s->dup(lv) );
 	return npt;
 }

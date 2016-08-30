@@ -23,15 +23,16 @@ struct CSymPatt {
 
 CNode * CSymPatt::expr(){
 	CNode * r=0;
-	if (first != last) 
-		if (first->next()==last) 
-			r = first->dup();
+    if (first != last){
+        if (first->next()==last)
+            r = first->dup();
 		else {
 			r = ::expr(sys->expr(Seq));
 			CNode * e=first;
 			for (CNode * e=first; e!=last; e->next())
 				append(r,e->dup());
 		}
+    }
 	return ::expr(sys->expr(Rule),sys->expr(symbol),r);
 }
 
@@ -133,7 +134,7 @@ bool CPattern::match_pattern(CNode * * e, CNode * p){
 			}
 			else {
 				f=*e;					// First position
-				if(m = match(e,p->first()->next()))
+				if( (m = match(e,p->first()->next())) )
 					pat_table.push_back(CSymPatt(p->first()->symbol(),f,*e));
 			}
 			return m;
@@ -227,7 +228,7 @@ bool CPattern::match_next(CNode * * e, CNode * p){
 bool CPattern::match_seq(CNode * * e, CNode * p){
 	CNode * f = *e;
 	cerr << "match_seq(" << tra(f) <<","<< tra(p)<<")"<< endl;
-	if ( match(e , p) )
+    if ( match(e , p) ){
 		if ( !p || match_seq(e,p->next()) )
 			return true;
 		else {
@@ -238,15 +239,17 @@ bool CPattern::match_seq(CNode * * e, CNode * p){
 			} while ( ! match_seq(e,p) );
 			return true;
 		}
+    }
 	return false;
 }
 	
 bool CPattern::match_next_seq(CNode * * e, CNode * p){
-	if ( match(e, p) )
+    if ( match(e, p) ){
 		if ( match_next_seq(e,p->next()) )
 			return true;
 		else 
 			return match_next(e, p) && match_seq (e, p);
+    }
 	return false;
 }
 	

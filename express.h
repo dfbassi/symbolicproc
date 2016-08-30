@@ -93,7 +93,7 @@ CNode * CExpress::del_expr(CNode * e) {
 	CNode * s;	
 	if( e->is_comp() ){						// Compound expression
 		s = e->head();
-		while (s = del_expr(s))				// Delete subexpressions
+		while ((s = del_expr(s)) != NULL)	// Delete subexpressions
 			;
 		s = e->next();
 	}
@@ -370,7 +370,7 @@ CNode * evalfun(CNode * e, CNode * fu){
 					break;
 				case 92:	{
 				    string * s = e1->text();
-					while ( e1=e1->next() )
+					while ((e1=e1->next()) != NULL )
 						fu->f222( s, e1->text() );
 					o = ::expr(s);
 					}
@@ -392,7 +392,7 @@ CNode * evalfun(CNode * e, CNode * fu){
 					break;
 				case 93:	{
 				    bool b = e1->boolean();
-					while ( e1=e1->next() )
+					while ( (e1=e1->next()) != NULL )
 						b = fu->f333( b, e1->boolean() );
 					o = expr(b);
 					}
@@ -414,7 +414,7 @@ CNode * evalfun(CNode * e, CNode * fu){
 					break;
 				case 94:	{
 					int n = e1->integer();
-					while ( e1=e1->next() )
+					while ( (e1=e1->next()) != NULL )
 						n = fu->f444( n, e1->integer() );
 					o = expr(n);
 					}
@@ -436,7 +436,7 @@ CNode * evalfun(CNode * e, CNode * fu){
 					break;
 				case 95:	{
 					double r = e1->real();
-					while ( e1=e1->next() )
+					while ( (e1=e1->next()) != NULL )
 						r = fu->f555( r, e1->real() );
 					o = expr(r);
 					}

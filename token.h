@@ -30,8 +30,8 @@ class CToken {
     string val() { return s.assign(str,chp-str); };
     bool is_space()   { return  strchr(space,*chp)!=0; };
     bool is_delimit() { return  strchr(delimiters,*chp)!=0; };
-    bool is_number() { return(*chp>='0' && *chp<='9'); };
-    bool is_letter() { return(*chp>='A' && *chp<='Z' || *chp>='a' && *chp<='z'); };
+    bool is_number() { return((*chp>='0') && (*chp<='9')); };
+    bool is_letter() { return((*chp>='A' && *chp<='Z') || (*chp>='a' && *chp<='z')); };
     bool is_underscore() { return *chp == '_'; };
     int reminder() { return chp-str; };
 };
